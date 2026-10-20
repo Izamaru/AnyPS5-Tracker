@@ -1,0 +1,6 @@
+.tools/
+build/
+keystore/
+repository.xml
+__pycache__/
+*.pyc

@@ -1,0 +1,28 @@
+name: Tests
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  tracker:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Python tests
+        run: python -m unittest discover -s AnyPS5-Tracker/tests -v
+      - name: Dashboard controls
+        run: node AnyPS5-Tracker/tests/test_dashboard_ui.js
+      - name: Prepare shared Android assets
+        run: python android/prepare_assets.py
+      - name: Android data and rendering tests
+        run: node AnyPS5-Tracker/tests/test_android_mobile.js

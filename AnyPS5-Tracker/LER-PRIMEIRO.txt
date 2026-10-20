@@ -1,0 +1,15 @@
+ANYPS5 TRACKER - WINDOWS
+
+1. Extraia esta pasta no PC.
+2. Instale Python 3.10 ou superior.
+3. Abra INICIAR.bat.
+4. Para verificar automaticamente a cada 5 minutos pelo Windows,
+   abra INSTALAR-BOT-5MIN.bat uma vez. O painel recarrega sozinho.
+   O PC precisa estar ligado, com internet e sua sessao conectada.
+   Para desativar, abra REMOVER-BOT.bat.
+5. Consulte README.md para alertas por Telegram/Discord.
+
+Monitor independente criado por Izamaru.
+Fontes: AnyPS5, boykopovar e contribuidores do projeto original.
+https://github.com/boykopovar/AnyPS5
+Creditos e licenca do Tracker: consulte ../CREDITS.md e ../LICENSE.

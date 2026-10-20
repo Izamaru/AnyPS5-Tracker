@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+dados/
+painel.html
+.env
+*.secrets*

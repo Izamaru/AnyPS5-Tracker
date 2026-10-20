@@ -1,0 +1,35 @@
+# Estado e arquivos gerados pelo Tracker
+**/dados/
+**/painel.html
+**/releases/
+**/__pycache__/
+*.py[cod]
+
+# Ambiente de compilacao Android e assinaturas locais
+android/.tools/
+android/build/
+android/keystore/
+android/repository.xml
+*.jks
+*.keystore
+*.p12
+*.pfx
+*.pem
+*.key
+*.apk
+*.idsig
+
+# Credenciais, configuracoes privadas e pacotes locais
+.env
+.env.*
+*.secrets*
+.aws/
+.codex/
+.agents/
+*.rar
+*.zip
+*.7z
+*.log
+.publication/
+.DS_Store
+Thumbs.db
