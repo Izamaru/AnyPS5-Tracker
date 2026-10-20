@@ -34,6 +34,8 @@ A coleta automática depende do PC ligado, com internet e com sua sessão do Win
 
 A versão Android atual é **0.2.1**, para **Android 8.0+**, com Android System WebView atualizado. O app consulta as fontes diretamente no celular e funciona com o PC desligado.
 
+**[Baixar o APK v0.2.1 e conferir o SHA-256](https://github.com/Izamaru/AnyPS5-Tracker/releases/tag/v0.2.1).**
+
 Atualiza ao abrir e enquanto estiver em uso. A última leitura é salva para consulta offline. Não executa consultas periódicas com o app fechado e não exige conta ou login.
 
 O código está em [`android/`](android/README.md). As ferramentas pesadas, arquivos de compilação e chaves de assinatura ficam fora do controle de versão. Os APKs de compilação local são gerados em `AnyPS5-Tracker/releases/`.
