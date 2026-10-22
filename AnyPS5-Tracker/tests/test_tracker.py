@@ -1,5 +1,5 @@
 import copy
-from datetime import timedelta, timezone
+from datetime import datetime, timedelta, timezone
 import re
 import sys
 import tempfile
@@ -181,6 +181,28 @@ class TrackerTests(unittest.TestCase):
         self.assertIn('3 dias', output)
         self.assertIn('Hoje · parcial', output)
         self.assertEqual(output.count('class="chart-dot"'), 3)
+
+    def test_daily_window_rolls_after_thirty_days(self):
+        checked = datetime.fromisoformat('2026-10-22T17:00:00+00:00')
+        current = {'checked_at': checked.isoformat(),
+                   'progress': tracker.compact_progress(fake(6, 8)), 'errors': [],
+                   'official_history': tracker.compact_history([
+                       official_day((checked - timedelta(days=offset)).date().isoformat(), 4)
+                       for offset in range(40, 0, -1)])}
+        history = []
+        for advance in (0, 1):
+            current['checked_at'] = (checked + timedelta(days=advance)).isoformat()
+            output = tracker.render_dashboard(current, [], history)
+            first = checked + timedelta(days=advance - 29)
+            removed = first - timedelta(days=1)
+            self.assertIn('30 dias</span>', output)
+            self.assertEqual(output.count('class="chart-dot"'), 30)
+            table = re.search(r'<details class="history-table">(.*?)</details>', output)[1]
+            self.assertEqual(table.count('<tr>'), 31)  # cabeçalho e 30 datas
+            self.assertIn(first.strftime('%d/%m/%Y'), output)
+            self.assertNotIn(removed.strftime('%d/%m/%Y'), output)
+            history.append({'at': current['checked_at'], 'summary': current['progress']})
+        self.assertEqual(len(current['official_history']), 40)
 
     def test_daily_chart_groups_repeated_queries_in_local_calendar(self):
         from dashboard import daily_history_points

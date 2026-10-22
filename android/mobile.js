@@ -5,6 +5,7 @@
   const REPO = 'https://github.com/boykopovar/AnyPS5';
   const API = 'https://api.github.com/repos/boykopovar/AnyPS5';
   const CACHE_KEY = 'anyps5-android-data-v1';
+  const HISTORY_DAYS = 30;
   const PRIORITY = ['libSceAgc', 'libSceAgcDriver', 'libSceVideoOut', 'libkernel', 'libc', 'libSceAmpr', 'libSceAudioOut', 'libScePad', 'libSceAjm.native'];
   const AREAS = {libSceAgc:'Gráficos', libSceAgcDriver:'Driver gráfico', libSceVideoOut:'Saída de vídeo', libkernel:'Sistema', libc:'Runtime C', libSceAmpr:'API PS5', libSceAudioOut:'Saída de áudio', libScePad:'Controles', 'libSceAjm.native':'Processamento de áudio'};
   const KINDS = {progress:'Métricas', group:'Bibliotecas / GPU', release:'Releases', commit:'Commits'};
@@ -147,7 +148,7 @@
     return {ceiling:Math.max(step, Math.ceil(maximum/step)*step), step};
   }
   function renderChart(allPoints) {
-    const points = allPoints.slice(-60);
+    const points = allPoints.slice(-HISTORY_DAYS);
     if (points.length < 2) return '<div class="empty chart-empty">O gráfico aparece quando houver dados de pelo menos dois dias.<br><span>As consultas do mesmo dia são agrupadas em um único ponto.</span></div>';
     const start = Date.parse(points[0].date), span = Date.parse(points[points.length-1].date)-start;
     const {ceiling,step} = chartScale(points);
@@ -166,7 +167,7 @@
   }
   function renderValues(current, previous, days, events) {
     const libs = current.progress.libraries, gpu = current.progress.shaders;
-    const points = dailyPoints(current, days);
+    const points = dailyPoints(current, days).slice(-HISTORY_DAYS);
     const baseline = yesterdayRecord(current, days);
     let delta = '<span class="muted">Sem medição do dia anterior</span>';
     if (baseline) {
@@ -191,7 +192,7 @@
     }).join('');
     const eventRows = events.map(event => '<li data-kind="'+escape(event.kind)+'"><span class="event-mark '+escape(event.kind)+'" aria-hidden="true">'+(event.kind === 'commit' ? '↗' : '+')+'</span><div><span class="event-kind">'+KINDS[event.kind]+'</span><a href="'+safeURL(event.url)+'" rel="noopener noreferrer">'+escape(event.text)+' <span class="external" aria-hidden="true">↗</span></a></div></li>').join('');
     const filters = Object.entries(KINDS).map(([kind,label]) => '<button type="button" data-filter="'+kind+'" aria-pressed="false">'+label+' <span>'+events.filter(event => event.kind === kind).length+'</span></button>').join('');
-    const historyRows = [...points.slice(-60)].reverse().map(row => '<tr><th scope="row">'+dayLabel(row.date)+'<span class="lib-area">'+row.source+'</span></th><td>'+number(row.summary.libraries.done)+'</td><td>'+number(row.summary.libraries.total)+'</td><td>'+percent(row.summary.libraries.percent,2)+'</td></tr>').join('');
+    const historyRows = [...points].reverse().map(row => '<tr><th scope="row">'+dayLabel(row.date)+'<span class="lib-area">'+row.source+'</span></th><td>'+number(row.summary.libraries.done)+'</td><td>'+number(row.summary.libraries.total)+'</td><td>'+percent(row.summary.libraries.percent,2)+'</td></tr>').join('');
     return {
       checked_at:escape(current.progress_as_of || current.checked_at), checked_label:escape(dateLabel(current.progress_as_of || current.checked_at)),
       status_class:current.errors.length ? 'amber' : 'green', status:current.progress_error ? 'Dados salvos · coleta indisponível' : current.errors.length ? 'Coleta com avisos' : 'Última coleta concluída',

@@ -15,6 +15,7 @@ AREAS = {
 }
 KINDS = {'progress': 'Métricas', 'group': 'Bibliotecas / GPU',
          'release': 'Releases', 'commit': 'Commits'}
+HISTORY_DAYS = 30
 
 
 def escape(value):
@@ -134,7 +135,7 @@ def chart_scale(points):
 def chart(points):
     if len(points) < 2:
         return '<div class="empty chart-empty">O gráfico aparece quando houver dados de pelo menos dois dias.<br><span>As consultas do mesmo dia são agrupadas em um único ponto.</span></div>'
-    points = points[-60:]
+    points = points[-HISTORY_DAYS:]
     def timestamp(row):
         return datetime.fromisoformat(row['date']).replace(tzinfo=timezone.utc).timestamp()
     times = [timestamp(row) for row in points]
@@ -177,7 +178,7 @@ def render_panel(current, events, history, priority):
     libs, gpu = progress.get('libraries', {}), progress.get('shaders', {})
     measurements = history_points(current, history)
     previous = measurements[-2]['summary'].get('libraries') if len(measurements) > 1 else None
-    points = daily_history_points(current, history)
+    points = daily_history_points(current, history)[-HISTORY_DAYS:]
     has_libs, has_gpu = bool(libs), bool(gpu)
     done, total = libs.get('done', 0), libs.get('total', 0)
     coverage = libs.get('percent', 0)
@@ -243,7 +244,7 @@ def render_panel(current, events, history, priority):
     history_rows = ''.join(f'<tr><th scope="row">{daily_label(row)}<span class="lib-area">{daily_source(row)}{" · com avisos" if row.get("errors") else ""}</span></th>'
                            f'<td>{number(row["summary"]["libraries"]["done"])}</td>'
                            f'<td>{number(row["summary"]["libraries"]["total"])}</td>'
-                           f'<td>{percent(row["summary"]["libraries"]["percent"], 2)}</td></tr>' for row in reversed(points[-60:]))
+                           f'<td>{percent(row["summary"]["libraries"]["percent"], 2)}</td></tr>' for row in reversed(points))
     values = {
         'checked_at': escape(current.get('checked_at', '')),
         'checked_label': escape(date_label(current.get('checked_at'))),

@@ -88,6 +88,25 @@ async function main() {
   const revisedHeights = heights(mobile.renderChart(revised),'chart-line');
   assert.ok(revisedHeights[1] > revisedHeights[0]);
   const values = mobile.renderValues(fixed,previous,localDays,events);
+  const base = new Date('2026-10-22T17:00:00Z');
+  const dated = offset => new Date(base.getTime()+offset*86400000).toISOString().slice(0,10);
+  const longCurrent = {...fixed,checked_at:base.toISOString(),
+    official_history:mobile.compactHistory(Array.from({length:40},(_,index) => day(dated(index-40))))};
+  let longDays = [];
+  for (const advance of [0,1]) {
+    longCurrent.checked_at = new Date(base.getTime()+advance*86400000).toISOString();
+    longDays = mobile.updateDays(longDays,longCurrent);
+    const window = mobile.renderValues(longCurrent,previous,longDays,[]);
+    const label = offset => dated(offset).split('-').reverse().join('/');
+    assert.equal(window.history_count,'30');
+    assert.equal((window.chart.match(/class="chart-dot"/g) || []).length,30);
+    assert.equal((window.history_rows.match(/<tr>/g) || []).length,30);
+    for (const markup of [window.chart,window.history_rows]) {
+      assert.ok(markup.includes(label(advance-29)));
+      assert.ok(!markup.includes(label(advance-30)));
+    }
+  }
+  assert.equal(longCurrent.official_history.length,40);
   assert.ok(values.delta.includes('+1 funções'));
   assert.ok(values.delta.includes('histórico oficial'));
   assert.ok(values.event_rows.includes('&lt;script&gt;'));
@@ -98,6 +117,7 @@ async function main() {
   const context = {window:{}};
   vm.runInNewContext(fs.readFileSync(configPath,'utf8'),context);
   const body = context.window.TrackerConfig.body;
+  assert.ok(body.includes('últimos 30 dias com registro'));
   assert.ok(body.includes('<main id="conteudo">'));
   assert.ok(body.includes('Atualizar agora'));
   for (const match of body.matchAll(/\{\{(\w+)\}\}/g)) assert.ok(match[1] in values,match[1]);

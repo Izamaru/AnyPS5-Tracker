@@ -10,8 +10,8 @@ ROOT = Path(__file__).resolve().parent
 TOOLS = ROOT / '.tools'
 BUILD = ROOT / 'build'
 RELEASES = ROOT.parent / 'AnyPS5-Tracker' / 'releases'
-VERSION_NAME = '0.2.1'
-VERSION_CODE = '2'
+VERSION_NAME = '0.2.2'
+VERSION_CODE = '3'
 
 
 def locate(name, folder):

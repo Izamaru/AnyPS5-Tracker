@@ -1,8 +1,8 @@
-# AnyPS5 Tracker para Android v0.2.1
+# AnyPS5 Tracker para Android v0.2.2
 
 Monitor independente criado por [@Izamaru](https://github.com/Izamaru), com créditos ao [AnyPS5](https://github.com/boykopovar/AnyPS5), a [@boykopovar](https://github.com/boykopovar) e aos [contribuidores](https://github.com/boykopovar/AnyPS5/graphs/contributors). Consulte [fontes e atribuições](../CREDITS.md) e a [licença MIT do código original do Tracker](../LICENSE).
 
-App pessoal para Android 8.0 ou superior, com Android System WebView atualizado. O APK é gerado em `../AnyPS5-Tracker/releases/AnyPS5-Tracker-Android-v0.2.1.apk`.
+App pessoal para Android 8.0 ou superior, com Android System WebView atualizado. O APK é gerado em `../AnyPS5-Tracker/releases/AnyPS5-Tracker-Android-v0.2.2.apk`.
 
 A pasta `android` fica ao lado de `AnyPS5-Tracker`. As ferramentas pesadas (`.tools`), os arquivos de compilação (`build`) e a chave (`keystore`) permanecem aqui. O visual é lido de `../AnyPS5-Tracker/painel-template.html`, e os APKs prontos vão para `../AnyPS5-Tracker/releases`.
 
@@ -12,7 +12,7 @@ O app atualiza ao abrir e enquanto estiver em uso. O seletor oferece 5, 15 e 30 
 
 Gráfico diário quantitativo, com linhas de funções implementadas e declaradas, comparação com ontem usando o histórico oficial, busca nas bibliotecas e filtros de alterações acompanham o painel desktop. O histórico local do celular é independente do PC.
 
-A versão 0.2.1 muda o gráfico para quantidades absolutas, com escala automática a partir de zero. Instale este APK por cima da versão 0.2.0 para atualizar mantendo os dados; a assinatura e o identificador do aplicativo foram preservados.
+A versão 0.2.2 limita gráfico, tabela e contador aos últimos 30 dias com registro. Quando entra uma nova data, a mais antiga sai da visualização. Instale este APK por cima da versão 0.2.1 para atualizar mantendo os dados; a assinatura e o identificador do aplicativo foram preservados.
 
 ## Instalação
 

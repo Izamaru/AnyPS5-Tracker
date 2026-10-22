@@ -7,7 +7,7 @@ Monitor independente do desenvolvimento do **[AnyPS5](https://github.com/boykopo
 ## O que o painel mostra
 
 - Quantidade de funções de bibliotecas PS5 implementadas, declaradas e pendentes.
-- Gráfico diário quantitativo: implementadas em linha contínua e declaradas em linha tracejada, com escala automática.
+- Gráfico diário quantitativo dos últimos 30 dias com registro: implementadas em linha contínua e declaradas em linha tracejada, com escala automática. A cada nova data, a mais antiga sai do gráfico, da tabela e do contador.
 - Comparação com o dia anterior, priorizando o histórico oficial.
 - Instruções de GPU reconhecidas, bibliotecas pesquisáveis, releases e commits relevantes.
 - Intervalos de recarga de 5, 15 e 30 minutos, 1, 2, 3 e 6 horas, com preferência salva.
@@ -32,9 +32,9 @@ A coleta automática depende do PC ligado, com internet e com sua sessão do Win
 
 ## Android
 
-A versão Android atual é **0.2.1**, para **Android 8.0+**, com Android System WebView atualizado. O app consulta as fontes diretamente no celular e funciona com o PC desligado.
+A versão Android atual é **0.2.2**, para **Android 8.0+**, com Android System WebView atualizado. O app consulta as fontes diretamente no celular e funciona com o PC desligado. A versão 0.2.2 limita gráfico, tabela e contador aos últimos 30 dias com registro, removendo a data mais antiga da visualização quando entra uma nova.
 
-**[Baixar o APK v0.2.1 e conferir o SHA-256](https://github.com/Izamaru/AnyPS5-Tracker/releases/tag/v0.2.1).**
+**[Baixar o APK v0.2.2 e conferir o SHA-256](https://github.com/Izamaru/AnyPS5-Tracker/releases/tag/v0.2.2).**
 
 Atualiza ao abrir e enquanto estiver em uso. A última leitura é salva para consulta offline. Não executa consultas periódicas com o app fechado e não exige conta ou login.
 
